@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload Multiple Files</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<div class="container h-100">
+		<div class="row h-100 justify-content-center align-items-center">
+			<div class="col-md-10 table-responsive">
+				<h2>Uploaded Files</h2>
+				<table id="customerTable" class="table">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Filename</th>
+							<th>URL</th>
+							<th>FileType</th>
+							<th>Size</th>
+							<th>Download</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="file, rowStat: ${files}">
+					        <td th:text="${rowStat.count}">1</td>
+							<td th:text="${file.fileName}">File-Name</td>
+							<td th:text="${file.fileDownloadUri}">Link Download</td>
+							<td th:text="${file.fileType}">Data-Type</td>
+							<td th:text="${file.size}">File-Size</td>
+							<td><a th:href="${file.fileDownloadUri}">Link</a></td>
+					    </tr>
+					</tbody>
+				</table>
+				<div>
+					<a th:href="@{/api/uploadPage}" class="btn btn-light btn-block" role="button">Back to Upload Form</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

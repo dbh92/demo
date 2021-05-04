@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <title>Edit Tutorials</title>
+</head>
+<body>
+<div align="center">
+  <h1>Edit Tutorial</h1>
+  <br/>
+  <form action="#" th:action="@{/api/tutorials/save}" th:object="${tutorialData}"
+        method="post">
+
+    <table border="0" cellpadding="10">
+      <tr th:if="${tutorialData.id == null}" style="display: none":style="display: block">
+        <td>ID:</td>
+        <td><input type="text" th:field="*{id}" readonly/></td>
+      </tr>
+      <tr>
+        <td>Description:</td>
+        <td><input type="text" th:field="*{description}" required="required"/></td>
+      </tr>
+      <tr>
+        <td>Published:</td>
+        <td>
+          <input type="radio" id="true" th:field="*{published}" value="true">
+          <label for="true">True</label>
+          <input type="radio" id="false" th:field="*{published}" value="false">
+          <label for="false">False</label>
+        </td>
+      </tr>
+      <tr>
+        <td>Title:</td>
+        <td><input type="text" th:field="*{title}" required="required"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit">Save</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>
