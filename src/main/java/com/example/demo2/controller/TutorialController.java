@@ -67,6 +67,12 @@ public class TutorialController {
 
     @GetMapping("/tutorials/mutilSearch")
     public String getTutorials(@RequestParam (required = false) String description, @RequestParam (required = false) Long id, Model model) {
+//        long idL = 0;
+//        try{
+//            idL = Long.parseLong(id);
+//        }catch (Exception e) {
+//            idL = 0;
+//        }
         List<Tutorial> tutorialss = tutorialService.findTutorialBySearch(description, id);
         model.addAttribute("tutorialss", tutorialss);
         return "tutorials";

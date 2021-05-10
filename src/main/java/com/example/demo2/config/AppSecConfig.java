@@ -42,8 +42,10 @@ public class AppSecConfig extends WebSecurityConfigurerAdapter {
                 "/fonts/**",
                 "/images/**",
                 "/**/*.js").permitAll();
-        http.authorizeRequests().antMatchers( "/api/tutorials/**").access("hasAnyRole('ROLE_USER')")
+        http.authorizeRequests()
                 .antMatchers( "/api/**").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers( "/api/tutorials/**").access("hasAnyRole('ROLE_USER')")
+
                 .and().formLogin()
                 .loginProcessingUrl("/check_url") // Submit URL
                 .loginPage("/api/login")

@@ -1,6 +1,7 @@
 package com.example.demo2.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tutorials")
@@ -9,12 +10,15 @@ public class Tutorial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotBlank (message = "Please fill out this field")
     @Column(name = "title")
     private String title;
 
+    @NotBlank(message = "Please fill out this field")
     @Column(name = "description")
     private String description;
 
+    @NotBlank (message = "Please fill out this field")
     @Column(name = "published")
     private boolean published;
 

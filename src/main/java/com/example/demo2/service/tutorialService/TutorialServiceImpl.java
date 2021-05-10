@@ -34,6 +34,7 @@ public class TutorialServiceImpl implements TutorialService {
 
     @Override
     public List<Tutorial> findTutorialBySearch(String description, Long id) {
+//        Long parId = Long.parseLong(id);
         String sql = "Select e from Tutorial e where 1 = 1";
         StringBuilder sb = new StringBuilder(sql);
         try {
