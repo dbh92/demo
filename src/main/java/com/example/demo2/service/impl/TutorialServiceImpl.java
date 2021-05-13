@@ -1,7 +1,8 @@
-package com.example.demo2.service.tutorialService;
+package com.example.demo2.service.impl;
 
 import com.example.demo2.model.Tutorial;
 import com.example.demo2.repository.TutorialRepository;
+import com.example.demo2.service.TutorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.util.List;
 
 @Service
@@ -33,28 +32,8 @@ public class TutorialServiceImpl implements TutorialService {
     }
 
     @Override
-    public List<Tutorial> findTutorialBySearch(String description, Long id) {
-//        Long parId = Long.parseLong(id);
-        String sql = "Select e from Tutorial e where 1 = 1";
-        StringBuilder sb = new StringBuilder(sql);
-        try {
-            if (id != null) {
-                sb.append(" and e.id = :id");
-            }
-            if ((description != null) &&(!description.isEmpty())) {
-                sb.append(" and e.description = :description");
-            }
-            Query query = entityManager.createQuery(sb.toString(), Tutorial.class);
-            if (id != null) {
-                query.setParameter("id", id);
-            }
-            if ((description != null) &&(!description.isEmpty())) {
-                query.setParameter("description", description);
-            }
+    public List<Tutorial> findTutorialBySearch(String keyword) {
 
-            return query.getResultList();
-        } catch (NoResultException e) {
-            return null;
-        }
+        return tutorialRepository.findTutorialBySearch(keyword);
     }
 }

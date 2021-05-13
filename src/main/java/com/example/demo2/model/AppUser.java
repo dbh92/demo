@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -17,10 +16,8 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long appUser_id;
 
-    @NotBlank (message = "Please fill out this field")
     private String name;
 
-    @NotBlank (message = "Please fill out this field")
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)

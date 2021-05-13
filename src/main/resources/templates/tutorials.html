@@ -44,36 +44,52 @@
     </div>
 </div>
 
-<div class="container shadow rounded py-5">
-    <div class="d-flex justify-content-center">
-        <label for="id" class="col-2">ID</label>
-        <div class="px-4 col-10">
-            <input type="text" name="idSearch" id="id" class="form-control" value="">
-            <span id="idValid" style="display: none">please input fields</span>
-            <span id="idValidNumber" style="display: none">please input number</span>
-        </div>
-    </div>
-    <div class="py-3"></div>
-    <div class="d-flex justify-content-center">
-        <label for="id" class="col-2">Description</label>
-        <div class="px-4 col-10">
-            <input class="form-control" type="text" name="description" id="inputDes"/>
-            <span id="desValid" style="display: none">please input fields</span>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="px-6 col-10" style="margin-top: 1rem;margin-left: 54rem">
-            <input type="button" name="searchId" id="searchId" class="form-submit" value="Search"/>
-        </div>
-    </div>
-</div>
 
-<div class="row d-flex justify-content-center">
-    <div class="col-6">
+
+<!--<div class="container shadow rounded py-5">-->
+<!--    <div class="d-flex justify-content-center">-->
+<!--        <label for="id" class="col-2">ID</label>-->
+<!--        <div class="px-4 col-10">-->
+<!--            <input type="text" name="idSearch" id="id" class="form-control" value="">-->
+<!--            <span id="idValid" style="display: none">please input fields</span>-->
+<!--            <span id="idValidNumber" style="display: none">please input number</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="py-3"></div>-->
+<!--    <div class="d-flex justify-content-center">-->
+<!--        <label for="id" class="col-2">Description</label>-->
+<!--        <div class="px-4 col-10">-->
+<!--            <input class="form-control" type="text" name="description" id="inputDes"/>-->
+<!--            <span id="desValid" style="display: none">please input fields</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="d-flex justify-content-center">-->
+<!--        <div class="px-6 col-10" style="margin-top: 1rem;margin-left: 54rem">-->
+<!--            <input type="button" name="searchId" id="searchId" class="form-submit" value="Search"/>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="row justify-content-center">
+    <form th:action="@{/api/mutilSearch}">
+        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required/>
+        &nbsp;
+        <input type="submit" value="Search"/>
+        &nbsp;
+        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()"/>
+    </form>
+    <div class="ml-12">
         <a th:href="@{/api/uploadPage}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Upload
             File</a>
     </div>
 </div>
+
+<!--<div class="row d-flex justify-content-center">-->
+<!--    <div class="col-6">-->
+<!--        <a th:href="@{/api/uploadPage}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Upload-->
+<!--            File</a>-->
+<!--    </div>-->
+<!--</div>-->
 
 <div class="row justify-content-center">
     <div class="col-sm-6">
@@ -106,12 +122,12 @@
                 <td th:text="${item.title}">${item.title}</td>
                 <td>
 								<span class="edit">
-									<a th:href="@{'/api/tutorials/update/'+${item.id}}">
+									<a th:href="@{'/api/update/'+${item.id}}">
 										<i class="fas fa-edit"></i>
 									</a>
 								</span>
                     <span class="remove" style="{float:right}">
-									<a th:href="@{'/api/tutorials/delete/'+${item.id}}">
+									<a th:href="@{'/api/delete/'+${item.id}}">
 										<i class="fas fa-trash-alt"></i>
 									</a>
 								</span>
@@ -147,7 +163,7 @@
     </div>
 </div>
 <div class="box-footer text-center">
-    <a th:href="@{'/api/tutorials/created/'}" class="btn btn-primary">ADD</a>
+    <a th:href="@{'/api/created/'}" class="btn btn-primary">ADD</a>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script
@@ -163,67 +179,57 @@
         $("#userTable").on('click', '.remove', function () {
             $(this).closest('tr').remove();
         });
+
+        $("#btnClear").click(function () {
+            window.location = "[[@{/api/tutorials}]]";
+        })
+
+        // $("#id").on('blur', function () {
+        //     var ids = $("#id").val();
+        //     var pattern = /^\d+$/;
+        //     var a = pattern.test(ids);
+        //     console.log(a);
+        //     if (a == false || ids == "") {
+        //         $("#idValid").css("display", "block")
+        //         $("#id").addClass("idValid");
+        //         $("#idValid").addClass("idValids");
+        //     } else {
+        //         $("#idValid").css("display", "none")
+        //         $("#id").removeClass("idValid");
+        //         $("#idValid").removeClass("idValids");
+        //     }
+        // });
+        // $("#inputDes").on('blur', function () {
+        //     var inputDes = $("#inputDes").val();
+        //     if (inputDes == "") {
+        //         $("#desValid").css("display", "block")
+        //         $("#inputDes").addClass("idValid");
+        //         $("#desValid").addClass("idValids");
+        //     } else {
+        //         $("#desValid").css("display", "none")
+        //         $("#inputDes").removeClass("idValid");
+        //         $("#desValid").removeClass("idValids");
+        //     }
+        // });
+        //
         // $("#searchId").click(function () {
         //     var id = $("#id").val();
-        //     window.location.href = "http://localhost:8088/api/tutorials/search?id=" + id;
-
-        // $.ajax({
-        //         type: 'GET',
-        //         url: "/api/tutorials/get/" + id,
-        //         success: function (result) {
-        //             console.log(result)
-        //             $("html").html("");
-        //             $("html").html(result);
+        //     var description = $("#inputDes").val();
+        //     $.ajax({
+        //             type: 'GET',
+        //             url: "/api/tutorials/mutilSearch",
+        //             data: {description: description, id: id},
+        //             success: function (result) {
+        //                 if (result == null) {
+        //                     $("html").html("");
+        //                 } else
+        //                     console.log(result)
+        //                 $("html").html("");
+        //                 $("html").html(result);
+        //             }
         //         }
-        //     }
-        // );
-
-        $("#id").on('blur', function () {
-            var ids = $("#id").val();
-            var pattern = /^\d+$/;
-            var a = pattern.test(ids);
-            console.log(a);
-            if (a == false || ids == "") {
-                $("#idValid").css("display", "block")
-                $("#id").addClass("idValid");
-                $("#idValid").addClass("idValids");
-            } else {
-                $("#idValid").css("display", "none")
-                $("#id").removeClass("idValid");
-                $("#idValid").removeClass("idValids");
-            }
-        });
-        $("#inputDes").on('blur', function () {
-            var inputDes = $("#inputDes").val();
-            if (inputDes == "") {
-                $("#desValid").css("display", "block")
-                $("#inputDes").addClass("idValid");
-                $("#desValid").addClass("idValids");
-            } else {
-                $("#desValid").css("display", "none")
-                $("#inputDes").removeClass("idValid");
-                $("#desValid").removeClass("idValids");
-            }
-        });
-
-        $("#searchId").click(function () {
-            var id = $("#id").val();
-            var description = $("#inputDes").val();
-            $.ajax({
-                    type: 'GET',
-                    url: "/api/tutorials/mutilSearch",
-                    data: {description: description, id: id},
-                    success: function (result) {
-                        if (result == null) {
-                            $("html").html("");
-                        } else
-                            console.log(result)
-                        $("html").html("");
-                        $("html").html(result);
-                    }
-                }
-            );
-        });
+        //     );
+        // });
     });
 </script>
 </body>

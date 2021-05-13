@@ -1,11 +1,10 @@
-package com.example.demo2.service.appUserService;
+package com.example.demo2.service.impl;
 
 import com.example.demo2.model.AppUser;
-import com.example.demo2.model.Role;
-import com.example.demo2.repository.IAppUserRepository;
+import com.example.demo2.repository.AppUserRepository;
+import com.example.demo2.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,18 +18,12 @@ import java.util.Optional;
 @Service
 public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     @Autowired
-    private IAppUserRepository appUserRepository;
+    private AppUserRepository appUserRepository;
 
     @Override
     public AppUser getUserByUsername(String username) {
         return appUserRepository.findByName(username);
     }
-
-    @Override
-    public Iterable<AppUser> getAllByRoleId(Long id) {
-        return appUserRepository.getAllByRoleId(id);
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,35 +36,6 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
                 user.getPassword(),
                 authorities);
         return userDetails;
-    }
-
-    @Override
-    public AppUser getCurrentUser() {
-        AppUser user;
-        String userName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        user = this.getUserByUsername(userName);
-        return user;
-    }
-
-    @Override
-    public Iterable<AppUser> getAllByRoleIsNotContaining(Long id) {
-        return appUserRepository.getAllByRoleIsNotContaining(id);
-    }
-
-    @Override
-    public Iterable<AppUser> getAllByRoleOrRole(Role role1, Role role2) {
-        return appUserRepository.getAllByRoleOrRole(role1, role2);
-    }
-
-    @Override
-    public Iterable<AppUser> getAllByNameIsContaining(String name) {
-        return appUserRepository.getAllByNameIsContaining(name);
     }
 
     @Override

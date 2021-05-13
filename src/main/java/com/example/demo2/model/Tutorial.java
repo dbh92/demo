@@ -2,6 +2,8 @@ package com.example.demo2.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tutorials")
@@ -10,26 +12,32 @@ public class Tutorial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotBlank (message = "Please fill out this field")
+    @NotBlank(message = "field may not be blank")
+    @Size(min=3,max=20)
     @Column(name = "title")
     private String title;
 
-    @NotBlank(message = "Please fill out this field")
+    @NotBlank(message = "field may not be blank")
     @Column(name = "description")
     private String description;
 
-    @NotBlank (message = "Please fill out this field")
     @Column(name = "published")
     private boolean published;
+
+    @NotBlank(message = "field may not be blank")
+    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$")
+    @Column(name = "email")
+    private String email;
 
     public Tutorial() {
 
     }
 
-    public Tutorial(String title, String description, boolean published) {
+    public Tutorial(String title, String description, boolean published, String email) {
         this.title = title;
         this.description = description;
         this.published = published;
+        this.email = email;
     }
 
     public void setId(long id) {
@@ -64,8 +72,13 @@ public class Tutorial {
         this.published = isPublished;
     }
 
-    @Override
-    public String toString() {
-        return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+    public String getEmail() {
+        return email;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
 }

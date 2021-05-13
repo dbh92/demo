@@ -1,7 +1,8 @@
-package com.example.demo2.service.roleService;
+package com.example.demo2.service.impl;
 
 import com.example.demo2.model.Role;
 import com.example.demo2.repository.RoleRepository;
+import com.example.demo2.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,4 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.deleteById(id);
     }
 
-    @Override
-    public Role getById(Long id) {
-        return roleRepository.getById(id);
-    }
 }

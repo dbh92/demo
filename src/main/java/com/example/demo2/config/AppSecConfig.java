@@ -1,7 +1,6 @@
 package com.example.demo2.config;
 
-import com.example.demo2.service.appUserService.AppUserService;
-import com.example.demo2.service.appUserService.AppUserService;
+import com.example.demo2.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,7 +40,7 @@ public class AppSecConfig extends WebSecurityConfigurerAdapter {
                 "/css/**",
                 "/fonts/**",
                 "/images/**",
-                "/**/*.js").permitAll();
+                "/**/*.js","/swagger-ui/*", "/api-docs*", "/v3/**").permitAll();
         http.authorizeRequests()
                 .antMatchers( "/api/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers( "/api/tutorials/**").access("hasAnyRole('ROLE_USER')")
