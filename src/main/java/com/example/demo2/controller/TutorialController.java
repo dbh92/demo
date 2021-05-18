@@ -158,15 +158,15 @@ public class TutorialController {
     @GetMapping("/")
     public String viewHomePage(Model model) {
 
-        return findPaginated(1, "description", "asc", model);
+        return findPaginated(1, 5,"description", "asc", model);
     }
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam(value = "pageSize") Integer pageSize,
                                 @RequestParam("sortField") String sortField,
                                 @RequestParam("sortDir") String sortDir,
                                 Model model) {
-        int pageSize = 5;
 
         Page<Tutorial> page = tutorialService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<Tutorial> tutorialss = page.getContent();
